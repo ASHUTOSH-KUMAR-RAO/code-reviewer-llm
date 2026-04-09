@@ -32,3 +32,10 @@ Thumbs.db
 dist/
 build/
 *.egg-info/
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+*.log
