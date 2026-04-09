@@ -1,99 +1,52 @@
+# 🛠️ AI Code Reviewer & Debugger
 
-# 🛠️ Code Reviewer & Debugger LLM
+![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.56-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
+![LangChain](https://img.shields.io/badge/LangChain-LCEL-1C3C3C?style=for-the-badge&logo=chainlink&logoColor=white)
+![Groq](https://img.shields.io/badge/Groq-GPT--OSS--120B-F55036?style=for-the-badge&logo=groq&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen?style=for-the-badge)
 
-> **Paste your code → Get bugs found, fixed, explained & optimized — instantly!**
-> Powered by **LangChain (LCEL)** + **ChatGroq (Llama3 70B)**
+> **Paste your code or upload a file → Get bugs found, fixed, explained, secured & optimized — instantly!**
+> Powered by **LangChain (LCEL)** + **Groq (GPT-OSS-120B)** + **Streamlit**
 
 ---
 
 ## ✨ Features
 
-### 🔍 Core Features
-
-| Feature | Description |
+### 🔍 Core Modes
+| Mode | Description |
 |---|---|
-| 🐛 **Bug Finder** | Code paste karo, saare bugs automatically detect ho jaate hain |
-| ✅ **Code Reviewer** | Best practices & code quality check with actionable suggestions |
-| 💡 **Code Explainer** | Line-by-line explanation in simple, human-friendly language |
-| 🔧 **Auto Fixer** | Buggy code in → Clean fixed code out |
-| ⚡ **Code Optimizer** | Slow or messy code → Faster, cleaner version |
+| 🐛 **Bug Finder** | Finds all bugs with severity levels in a clean table |
+| ✅ **Code Reviewer** | Best practices & code quality check |
+| 💡 **Code Explainer** | Line-by-line explanation in simple language |
+| 🔧 **Auto Fixer** | Buggy code in → Fixed code out |
+| ⚡ **Code Optimizer** | Slow/messy code → Faster, cleaner version |
+| 🔒 **Security Checker** | SQL Injection, XSS, hardcoded keys & more |
+| 🌐 **Code Translator** | Convert code between any two languages |
+| 📝 **Test Case Generator** | Auto unit tests — pytest, Jest, JUnit |
 
-### 🌟 Cool Add-ons
-
-- 🌐 **Multi-Language Support** — Python, JavaScript, Java, C++, and more
-- 📊 **Severity Levels** — Every bug tagged as `Low` / `Medium` / `High`
-- 📋 **Review Report** — A clean, organized report with all findings
+### 🌟 UI Features
+- 📁 **File Upload** — `.py`, `.js`, `.cpp`, `.java` and more
+- 💬 **Chat Mode** — Converse with AI about your code
+- 🌙 **Dark / 🟢 Light Theme** — Toggle anytime
+- 📥 **Download Report** — Save results as `.txt`
+- 💻 **Multi-Language** — Python, JS, Java, C++, Go, Rust, PHP & more
 
 ---
 
 ## 🏗️ Architecture
 
 ```
-PromptTemplate  |  ChatGroq (Llama3-70B)  |  StrOutputParser
-      ↓                    ↓                       ↓
-  Code + Mode         AI Analysis             Clean Output
+PromptTemplate  |  ChatGroq (GPT-OSS-120B)  |  StrOutputParser
+      ↓                      ↓                       ↓
+  Code + Mode           AI Analysis             Clean Output
 ```
 
-This project uses **LangChain Expression Language (LCEL)** to chain components in a simple, readable pipeline:
-
+**LCEL Chain:**
 ```python
 chain = prompt | llm | output_parser
-result = chain.invoke({"code": user_code, "mode": selected_mode})
-```
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-```bash
-Python >= 3.9
-```
-
-### Installation
-
-```bash
-# 1. Clone the repo
-git clone https://github.com/ASHUTOSH-KUMAR-RAO/code-reviewer-llm
-cd code-reviewer-app
-
-# 2. Install dependencies
-pip install -r requirements.txt
-
-# 3. Set up environment variables
-cp .env.example .env
-# Add your GROQ_API_KEY in .env
-```
-
-### Environment Variables
-
-Create a `.env` file in the root directory:
-
-```env
-GROQ_API_KEY=your_groq_api_key_here
-```
-
-> 🔑 Get your free Groq API key at [console.groq.com](https://console.groq.com)
-
----
-
-## 💻 Usage
-
-```bash
-# Run the app
-python app.py
-```
-
-Then paste your code and choose a mode:
-
-```
-Select Mode:
-  1. 🐛 Bug Finder
-  2. ✅ Code Reviewer
-  3. 💡 Code Explainer
-  4. 🔧 Auto Fixer
-  5. ⚡ Code Optimizer
+result = chain.invoke({"code": user_code, "language": language})
 ```
 
 ---
@@ -103,67 +56,109 @@ Select Mode:
 ```
 code-reviewer-app/
 │
-├── app.py                  # Main entry point — LCEL chain + all logic
-├── requirements.txt        # Project dependencies
-├── .env                    # API keys (NOT pushed to GitHub)
-├── .gitignore              # Ignores .env and other sensitive files
-└── README.md               # Project documentation
+├── .github/                        # GitHub specific files
+│   ├── ISSUE_TEMPLATE/
+│   │   ├── bug_report.md           # Bug report template
+│   │   └── feature_request.md      # Feature request template
+│   └── pull_request_template.md    # PR template
+│
+├── ui/                             # Streamlit UI components
+│   ├── __init__.py
+│   ├── sidebar.py                  # Sidebar settings & theme toggle
+│   ├── analyze_tab.py              # Analyze Code tab
+│   └── chat_tab.py                 # Chat Mode tab
+│
+├── app.py                          # Main entry point
+├── prompts.py                      # All prompt templates
+├── llm.py                          # LLM & LCEL chain setup
+├── themes.py                       # Dark/Light theme CSS
+├── requirements.txt                # Project dependencies
+├── .env                            # API keys (NOT pushed to GitHub)
+├── .env.example                    # API key template
+├── .gitignore                      # Git ignore rules
+├── LICENSE                         # MIT License
+├── CONTRIBUTING.md                 # Contribution guide
+├── CHANGELOG.md                    # Version history
+└── README.md                       # Project documentation
 ```
 
 ---
 
-## 📦 Tech Stack
+## 🚀 Getting Started
 
-| Tool | Purpose |
-|---|---|
-| [LangChain](https://langchain.com) | LCEL Chain orchestration |
-| [ChatGroq](https://console.groq.com) | LLM API (Llama3 70B) |
-| [Python](https://python.org) | Core language |
-| `StrOutputParser` | Clean text output from LLM |
+### Prerequisites
+- Python 3.9+
+- Groq API Key (free at [console.groq.com](https://console.groq.com))
+
+### Installation
+
+```bash
+# 1. Clone the repo
+git clone https://github.com/ASHUTOSH-KUMAR-RAO/code-reviewer-llm.git
+cd code-reviewer-llm
+
+# 2. Create & activate conda environment
+conda create -n code-reviewer python=3.9
+conda activate code-reviewer
+
+# 3. Install dependencies
+pip install -r requirements.txt
+
+# 4. Setup environment variables
+cp .env.example .env
+# Add your GROQ_API_KEY in .env
+```
+
+### Environment Variables
+
+```env
+GROQ_API_KEY=your_groq_api_key_here
+```
+
+> 🔑 Get your free API key at [console.groq.com](https://console.groq.com)
 
 ---
 
-## 📋 Sample Output
+## 💻 Usage
 
+```bash
+streamlit run app.py
 ```
-============================================================
-📋 CODE REVIEW REPORT
-============================================================
-Language  : Python
-Mode      : Bug Finder
-------------------------------------------------------------
 
-🔴 [HIGH]   Line 12 — Undefined variable 'reslt' (possible typo: 'result')
-🟡 [MEDIUM] Line 27 — Division by zero risk if 'n' is 0
-🟢 [LOW]    Line 5  — Unused import 'os'
-
-------------------------------------------------------------
-✅ 3 issue(s) found | 0 critical errors
-============================================================
-```
+App will open at `http://localhost:8501` 🌐
 
 ---
 
 ## 🤝 Contributing
 
-Pull requests are welcome! For major changes, please open an issue first to discuss what you'd like to change.
+Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 1. Fork the repo
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+2. Create your branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'feat: add AmazingFeature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
 ---
 
+## 📋 Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for version history.
+
+---
+
 ## 📄 License
 
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **MIT License** — see [LICENSE](LICENSE) for details.
 
 ---
 
 ## 👨‍💻 Author
 
-Made with ❤️ by **[Ashutosh Kumar Rao](https://github.com/ASHUTOSH-KUMAR-RAO)**
+**Ashutosh Kumar Rao**
 
-> *"Good code is its own best documentation."* — Steve McConnell
+[![GitHub](https://img.shields.io/badge/GitHub-ASHUTOSH--KUMAR--RAO-181717?style=for-the-badge&logo=github)](https://github.com/ASHUTOSH-KUMAR-RAO)
+
+---
+
+<center>Made with ❤️ Ashutosh Kumar Rao</center>
